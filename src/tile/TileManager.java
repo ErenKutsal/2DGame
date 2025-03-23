@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 
 import javax.imageio.ImageIO;
 
+import entity.Player;
 import main.GamePanel;
 
 public class TileManager {
@@ -25,10 +26,11 @@ public class TileManager {
 		
 		this.gameP = gameP;
 		tiles = new Tile[TILES_LENGTH];
-		mapTiles = new int[gameP.maxScreenRow][gameP.maxScreenCol];
+		mapTiles = new int[gameP.maxWorldRow][gameP.maxWorldCol];
+		String filePath = "/maps/worldMap";
 		
 		getTileImage();
-		parseFile();
+		loadMap(filePath);
 	}
 	
 	public void getTileImage() {
@@ -44,20 +46,24 @@ public class TileManager {
 		}
 	}
 	
-	public void parseFile() {
+	public void loadMap(String filePath) {
 		
 		try {
-			InputStream inputStream = getClass().getResourceAsStream("/maps/mapData.txt");
+			InputStream inputStream = getClass().getResourceAsStream(filePath);
 			BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
 			
 			String line;
 			int row = 0;
 			int col = 0;
-			while ((line = br.readLine()) != null) {
+			while (row < gameP.maxWorldRow && col < gameP.maxWorldCol) {
+				line = br.readLine();
 				String[] contents = line.strip().split(" ");
+				/*
 				for (String content : contents) {
 					System.out.println(content);
 				}
+				*/
+				
 				for (String content : contents) {
 					mapTiles[row][col] = Integer.valueOf(content);
 					col++;
@@ -65,26 +71,41 @@ public class TileManager {
 				col = 0;
 				row++;
 			}
+			br.close();
+			for (int[] array : mapTiles) {
+				for (int value : array) {
+					System.out.print(value);
+				}
+				System.out.println();
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		} 
 	}
 	public void draw(Graphics2D g2) {
 		
-		int x = 0;
-		int y = 0;
 		int tileSize = gameP.tileSize;
-		for (int row = 0; row < gameP.maxScreenRow; row++) {
+		Player player = gameP.player;
+		
+		for (int row = 0; row < gameP.maxWorldRow; row++) {
 			
-			for (int col = 0; col < gameP.maxScreenCol; col++) {
+			for (int col = 0; col < gameP.maxWorldCol; col++) {
+				
 				int tileType = mapTiles[row][col];
-				//System.out.println(tileType);
 				Tile tile = tiles[tileType];
-				g2.drawImage(tile.image, x, y, tileSize, tileSize, null);
-				x += tileSize;
+				
+				int worldX = row * tileSize;
+				int worldY = col * tileSize;
+				int screenX = worldX - player.worldX + player.screenX;
+				int screenY = worldY - player.worldY + player.screenY;
+				
+				
+				//only render required tiles
+				if (screenX + gameP.tileSize >= 0 && screenX - gameP.tileSize <= gameP.worldWidth &&
+						screenY + gameP.tileSize >= 0 && screenY - gameP.tileSize <= gameP.worldHeight)
+				g2.drawImage(tile.image, screenX, screenY, tileSize, tileSize, null);
+				
 			}
-			y += tileSize;
-			x = 0;
 		}
 	}
 }

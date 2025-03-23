@@ -28,12 +28,17 @@ public class GamePanel extends JPanel implements Runnable{
 	KeyHandler keyH = new KeyHandler();
 	TileManager tileM = new TileManager(this);
 	
-	Player player = new Player(this, keyH);
+	public Player player = new Player(this, keyH);
 	//players default position
 	int playerX = 100;
 	int playerY = 100;
 	int playerSpeed = 4;
 	
+	//World Settings
+	public final int maxWorldRow = 50;
+	public final int maxWorldCol = 50;
+	public final int worldHeight = maxWorldCol * tileSize;
+	public final int worldWidth = maxWorldRow * tileSize;
 	
 	public GamePanel() {
 		
