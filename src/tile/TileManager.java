@@ -41,6 +41,9 @@ public class TileManager {
 			
 			tiles[1] = new Tile();
 			tiles[1].image = ImageIO.read(getClass().getResourceAsStream("/tile/water.png"));
+			
+			tiles[2] = new Tile();
+			tiles[2].image = ImageIO.read(getClass().getResourceAsStream("/tile/wall.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -94,8 +97,8 @@ public class TileManager {
 				int tileType = mapTiles[row][col];
 				Tile tile = tiles[tileType];
 				
-				int worldX = row * tileSize;
-				int worldY = col * tileSize;
+				int worldX = col * tileSize;
+				int worldY = row * tileSize;
 				int screenX = worldX - player.worldX + player.screenX;
 				int screenY = worldY - player.worldY + player.screenY;
 				
