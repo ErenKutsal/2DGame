@@ -101,7 +101,6 @@ public class TileManager {
 				int screenX = tile.worldX - cam.cameraX;
 				int screenY = tile.worldY - cam.cameraY;
 				
-
 				if (screenX + gameP.tileSize >= 0 && screenX - gameP.tileSize <= gameP.worldWidth &&
 						screenY + gameP.tileSize >= 0 && screenY - gameP.tileSize <= gameP.worldHeight)
 				g2.drawImage(tile.image, screenX, screenY, tileSize, tileSize, null);

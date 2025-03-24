@@ -106,6 +106,8 @@ public class GamePanel extends JPanel implements Runnable{
 	public void update() {
 		
 		player.update();
+		cam.followEntity(player);
+		
 	}
 	
 	public void paintComponent(Graphics g) {

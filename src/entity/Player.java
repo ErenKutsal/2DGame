@@ -25,8 +25,8 @@ public class Player extends Entity{
 		this.cam = cam;
 		
 		//Player is in the middle.
-		playerX = (gameP.screenWidth / 2) - (gameP.tileSize / 2);
-		playerY = (gameP.screenHeight / 2) - (gameP.tileSize / 2);
+		//playerX = (gameP.screenWidth / 2) - (gameP.tileSize / 2);
+		//playerY = (gameP.screenHeight / 2) - (gameP.tileSize / 2);
 		
 		setDefaultValues();
 		getPlayerImage();
@@ -89,15 +89,10 @@ public class Player extends Entity{
 	    	directionVector[0] /= magnitude;
 	        directionVector[1] /= magnitude;
 	        
-	        System.out.println("Player updated");
-	        System.out.println(directionVector[0] * speed);
-	        System.out.println(directionVector[1] * speed);
 	        
-	        playerX += Math.round((float)directionVector[0] * speed);
-	        cam.cameraX += Math.round((float)directionVector[0] * speed);
+	        worldX += Math.round((float)directionVector[0] * speed);
 	        
-	        playerY += Math.round((float)directionVector[1] * speed);
-	        cam.cameraY += Math.round((float)directionVector[1] * speed);
+	        worldY += Math.round((float)directionVector[1] * speed);
 	        
 	       
 	        // Update sprite animation
@@ -135,6 +130,7 @@ public class Player extends Entity{
 				image = down2;
 			}
 			break;
+			
 		case "right":
 			if (spriteNum == 1) {
 				image = right1;
@@ -142,6 +138,7 @@ public class Player extends Entity{
 				image = right2;
 			}
 			break;
+			
 		case "left":
 			if (spriteNum == 1) {
 				image = left1;
@@ -151,7 +148,7 @@ public class Player extends Entity{
 			break;
 		}
 		
-		g2.drawImage(image, playerX - cam.cameraX, playerY - cam.cameraY, gameP.tileSize, gameP.tileSize, null);
+		g2.drawImage(image, worldX - cam.cameraX, worldY - cam.cameraY, gameP.tileSize, gameP.tileSize, null);
 	}
 	
 }
