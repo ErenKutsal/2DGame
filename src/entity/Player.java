@@ -1,13 +1,12 @@
 package entity;
 
-import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import main.Camera;
 import main.GamePanel;
 import main.KeyHandler;
 
@@ -15,17 +14,19 @@ public class Player extends Entity{
 
 	public GamePanel gameP;
 	public KeyHandler keyH;
+	public Camera cam;
 	
-	public final int screenX, screenY; //Coordinates to draw the player.
+	public int playerX, playerY; //Coordinates to draw the player.
 	
-	public Player(GamePanel gameP, KeyHandler keyH) {
+	public Player(GamePanel gameP, KeyHandler keyH, Camera cam) {
 		
 		this.gameP = gameP;
 		this.keyH = keyH;
+		this.cam = cam;
 		
 		//Player is in the middle.
-		screenX = (gameP.screenWidth / 2) - (gameP.tileSize / 2);
-		screenY = (gameP.screenHeight / 2) - (gameP.tileSize / 2);
+		playerX = (gameP.screenWidth / 2) - (gameP.tileSize / 2);
+		playerY = (gameP.screenHeight / 2) - (gameP.tileSize / 2);
 		
 		setDefaultValues();
 		getPlayerImage();
@@ -91,8 +92,12 @@ public class Player extends Entity{
 	        System.out.println("Player updated");
 	        System.out.println(directionVector[0] * speed);
 	        System.out.println(directionVector[1] * speed);
-	        worldX += Math.round((float)directionVector[0] * speed);
-	        worldY += Math.round((float)directionVector[1] * speed);
+	        
+	        playerX += Math.round((float)directionVector[0] * speed);
+	        cam.cameraX += Math.round((float)directionVector[0] * speed);
+	        
+	        playerY += Math.round((float)directionVector[1] * speed);
+	        cam.cameraY += Math.round((float)directionVector[1] * speed);
 	        
 	       
 	        // Update sprite animation
@@ -146,7 +151,7 @@ public class Player extends Entity{
 			break;
 		}
 		
-		g2.drawImage(image, screenX, screenY, gameP.tileSize, gameP.tileSize, null);
+		g2.drawImage(image, playerX - cam.cameraX, playerY - cam.cameraY, gameP.tileSize, gameP.tileSize, null);
 	}
 	
 }

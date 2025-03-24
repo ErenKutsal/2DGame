@@ -1,10 +1,8 @@
 package tile;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -12,41 +10,42 @@ import java.io.InputStreamReader;
 import javax.imageio.ImageIO;
 
 import entity.Player;
+import main.Camera;
 import main.GamePanel;
 
 public class TileManager {
 
 	GamePanel gameP;
-	Tile[] tiles;
+	public Camera cam;
 	int TILES_LENGTH = 10;
-	int[][] mapTiles;
+	Tile[][] mapTiles;
 	
-	
-	public TileManager(GamePanel gameP) {
+	public enum TILES {
 		
-		this.gameP = gameP;
-		tiles = new Tile[TILES_LENGTH];
-		mapTiles = new int[gameP.maxWorldRow][gameP.maxWorldCol];
-		String filePath = "/maps/worldMap";
+		WATER("/tile/water.png"), WALL("/tile/wall.png"), GRASS("/tile/grass.png");
 		
-		getTileImage();
-		loadMap(filePath);
+		public BufferedImage image;
+		
+		TILES(String path) {
+			
+			try {
+				image = ImageIO.read(getClass().getResourceAsStream(path));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
 	}
 	
-	public void getTileImage() {
+	
+	public TileManager(GamePanel gameP, Camera cam) {
 		
-		try {
-			tiles[0] = new Tile();
-			tiles[0].image = ImageIO.read(getClass().getResourceAsStream("/tile/grass.png"));
-			
-			tiles[1] = new Tile();
-			tiles[1].image = ImageIO.read(getClass().getResourceAsStream("/tile/water.png"));
-			
-			tiles[2] = new Tile();
-			tiles[2].image = ImageIO.read(getClass().getResourceAsStream("/tile/wall.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.gameP = gameP;
+		mapTiles = new Tile[gameP.maxWorldRow][gameP.maxWorldCol];
+		String filePath = "/maps/worldMap";
+		this.cam = cam;
+		loadMap(filePath);
+		System.out.println("bok");
 	}
 	
 	public void loadMap(String filePath) {
@@ -58,32 +57,35 @@ public class TileManager {
 			String line;
 			int row = 0;
 			int col = 0;
+			
 			while (row < gameP.maxWorldRow && col < gameP.maxWorldCol) {
 				line = br.readLine();
 				String[] contents = line.strip().split(" ");
-				/*
-				for (String content : contents) {
-					System.out.println(content);
-				}
-				*/
 				
 				for (String content : contents) {
-					mapTiles[row][col] = Integer.valueOf(content);
-					col++;
+					
+					switch (content) {
+					case "0":
+						mapTiles[row][col] = new Tile(TILES.GRASS.image, col*gameP.tileSize, row*gameP.tileSize);
+						break;
+					case "1":
+						mapTiles[row][col] = new Tile(TILES.WATER.image, col*gameP.tileSize, row*gameP.tileSize);
+						break;
+					case "2":
+						mapTiles[row][col] = new Tile(TILES.WALL.image, col*gameP.tileSize, row*gameP.tileSize);
+						break;
+					
+					}
+					++col;
 				}
 				col = 0;
 				row++;
 			}
 			br.close();
-			for (int[] array : mapTiles) {
-				for (int value : array) {
-					System.out.print(value);
-				}
-				System.out.println();
-			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		} 
+		
 	}
 	public void draw(Graphics2D g2) {
 		
@@ -94,16 +96,12 @@ public class TileManager {
 			
 			for (int col = 0; col < gameP.maxWorldCol; col++) {
 				
-				int tileType = mapTiles[row][col];
-				Tile tile = tiles[tileType];
+				Tile tile = mapTiles[row][col];
 				
-				int worldX = col * tileSize;
-				int worldY = row * tileSize;
-				int screenX = worldX - player.worldX + player.screenX;
-				int screenY = worldY - player.worldY + player.screenY;
+				int screenX = tile.worldX - cam.cameraX;
+				int screenY = tile.worldY - cam.cameraY;
 				
-				
-				//only render required tiles
+
 				if (screenX + gameP.tileSize >= 0 && screenX - gameP.tileSize <= gameP.worldWidth &&
 						screenY + gameP.tileSize >= 0 && screenY - gameP.tileSize <= gameP.worldHeight)
 				g2.drawImage(tile.image, screenX, screenY, tileSize, tileSize, null);

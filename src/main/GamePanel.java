@@ -25,11 +25,15 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	int FPS = 60;
 	
+	Camera cam = new Camera(this);
+	
+	
 	Thread gameThread;
 	KeyHandler keyH = new KeyHandler();
-	TileManager tileM = new TileManager(this);
+	TileManager tileM = new TileManager(this, cam);
+
 	
-	public Player player = new Player(this, keyH);
+	public Player player = new Player(this, keyH, cam);
 	//players default position
 	int playerX = 100;
 	int playerY = 100;
