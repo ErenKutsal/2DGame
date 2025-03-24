@@ -13,6 +13,7 @@ import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{
 	
+	
 	final int originalTileSize = 16;
 	final int scale = 3;
 	
