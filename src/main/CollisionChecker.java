@@ -31,8 +31,6 @@ public class CollisionChecker {
 		int entityBottomRow = entitySolidWorldBottomY / tileSize;
 		int entityTopRow = entitySolidWorldTopY / tileSize;
 		
-		int tileNum1, tileNum2;
-		
 		switch (entity.direction) {
 		case "up":
 			entityTopRow = (entitySolidWorldTopY - speed)/ tileSize;
@@ -44,7 +42,7 @@ public class CollisionChecker {
 			}
 			break;
 		case "down":
-			entityBottomRow = (entitySolidWorldBottomY - speed)/ tileSize;
+			entityBottomRow = (entitySolidWorldBottomY + speed)/ tileSize;
 			Tile bottomLeftTile = tiles[entityBottomRow][entityLeftCol];
 			Tile bottomRightTile = tiles[entityBottomRow][entityRightCol];
 			
@@ -53,7 +51,7 @@ public class CollisionChecker {
 			}
 			break;
 		case "right":
-			entityRightCol = (entitySolidWorldRightX - speed)/ tileSize;
+			entityRightCol = (entitySolidWorldRightX + speed)/ tileSize;
 			Tile rightTopTile = tiles[entityTopRow][entityRightCol];
 			Tile rightBottomTile = tiles[entityBottomRow][entityRightCol];
 			
