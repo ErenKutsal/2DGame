@@ -84,15 +84,17 @@ public class Player extends Entity{
 	    // Normalize direction vector
 	    double magnitude = Math.sqrt(directionVector[0] * directionVector[0] + directionVector[1] * directionVector[1]);
 	    if (magnitude != 0) {
-	        directionVector[0] /= magnitude;
+	        
+	    	directionVector[0] /= magnitude;
 	        directionVector[1] /= magnitude;
 	        
+	        System.out.println("Player updated");
 	        System.out.println(directionVector[0] * speed);
 	        System.out.println(directionVector[1] * speed);
-
-	        worldX += directionVector[0] * speed;
-	        worldY += directionVector[1] * speed;
-
+	        worldX += Math.round((float)directionVector[0] * speed);
+	        worldY += Math.round((float)directionVector[1] * speed);
+	        
+	       
 	        // Update sprite animation
 	        spriteCounter++;
 	        if (spriteCounter > 10) {
