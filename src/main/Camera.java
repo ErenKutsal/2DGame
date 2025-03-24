@@ -10,8 +10,8 @@ public class Camera {
 	
 	public int cameraX, cameraY;
 	
-	public Camera(GamePanel gp) {
-		this.gameP = gp;
+	public Camera(GamePanel gameP) {
+		this.gameP = gameP;
 	}
 	
 	

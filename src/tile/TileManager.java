@@ -18,7 +18,7 @@ public class TileManager {
 	GamePanel gameP;
 	public Camera cam;
 	int TILES_LENGTH = 10;
-	Tile[][] mapTiles;
+	public Tile[][] mapTiles;
 	
 	public enum TILES {
 		
@@ -66,13 +66,18 @@ public class TileManager {
 					
 					switch (content) {
 					case "0":
-						mapTiles[row][col] = new Tile(TILES.GRASS.image, col*gameP.tileSize, row*gameP.tileSize);
+						Tile grassTile = new Tile(TILES.GRASS.image, col*gameP.tileSize, row*gameP.tileSize);
+						mapTiles[row][col] = grassTile;
 						break;
 					case "1":
-						mapTiles[row][col] = new Tile(TILES.WATER.image, col*gameP.tileSize, row*gameP.tileSize);
+						Tile waterTile = new Tile(TILES.WATER.image, col*gameP.tileSize, row*gameP.tileSize);
+						waterTile.collision = true;
+						mapTiles[row][col] = waterTile;
 						break;
 					case "2":
-						mapTiles[row][col] = new Tile(TILES.WALL.image, col*gameP.tileSize, row*gameP.tileSize);
+						Tile wallTile = new Tile(TILES.WALL.image, col*gameP.tileSize, row*gameP.tileSize);
+						wallTile.collision = true;
+						mapTiles[row][col] = wallTile;
 						break;
 					
 					}

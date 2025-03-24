@@ -1,12 +1,15 @@
 package entity;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
 import main.Camera;
+import main.CollisionChecker;
 import main.GamePanel;
 import main.KeyHandler;
 
@@ -24,12 +27,15 @@ public class Player extends Entity{
 		this.keyH = keyH;
 		this.cam = cam;
 		
-		//Player is in the middle.
-		//playerX = (gameP.screenWidth / 2) - (gameP.tileSize / 2);
-		//playerY = (gameP.screenHeight / 2) - (gameP.tileSize / 2);
-		
 		setDefaultValues();
 		getPlayerImage();
+		
+		solidArea = new Rectangle();
+		solidArea.x = 8;
+		solidArea.y = 16;
+		solidArea.width = 32;
+		solidArea.height = 32;
+		
 	}
 	
 	public void setDefaultValues() {
@@ -81,7 +87,14 @@ public class Player extends Entity{
 	        direction = "left";
 	        directionVector[0] = -1;
 	    }
-
+	    
+	    CollisionChecker collisionChecker = gameP.collisionChecker;
+	    collisionOn = false;
+	    collisionChecker.checkTile(this);
+	    
+	    if (collisionOn) {
+	    	return;
+	    }
 	    // Normalize direction vector
 	    double magnitude = Math.sqrt(directionVector[0] * directionVector[0] + directionVector[1] * directionVector[1]);
 	    if (magnitude != 0) {
@@ -91,8 +104,11 @@ public class Player extends Entity{
 	        
 	        
 	        worldX += Math.round((float)directionVector[0] * speed);
-	        
 	        worldY += Math.round((float)directionVector[1] * speed);
+	        
+	        //update the hitbox coordinates
+//	        solidArea.x = worldX + 8;
+//	        solidArea.y = worldY + 16;
 	        
 	       
 	        // Update sprite animation
@@ -106,12 +122,6 @@ public class Player extends Entity{
 
 	
 	public void draw(Graphics2D g2) {
-		
-		/*
-		g2.setColor(Color.WHITE);
-		
-		g2.fillRect(x, y, gameP.tileSize, gameP.tileSize);
-		*/
 		
 		BufferedImage image = null;
 		
@@ -147,8 +157,11 @@ public class Player extends Entity{
 			}
 			break;
 		}
+		int screenX = worldX - cam.cameraX;
+		int screenY = worldY - cam.cameraY;
+		System.out.println(cam.cameraX);
+		g2.drawImage(image, screenX, screenY, gameP.tileSize, gameP.tileSize, null);
 		
-		g2.drawImage(image, worldX - cam.cameraX, worldY - cam.cameraY, gameP.tileSize, gameP.tileSize, null);
 	}
 	
 }
