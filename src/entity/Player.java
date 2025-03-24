@@ -61,40 +61,47 @@ public class Player extends Entity{
 	}
 	
 	public void update() {
+	    directionVector[0] = 0;
+	    directionVector[1] = 0;
 
-		if (keyH.upPressed) {
-			
-			direction = "up";
-			worldY -= speed;
-		}
-		else if (keyH.downPressed) {
-			
-			direction = "down";
-			worldY += speed;
-		}
-		else if (keyH.rightPressed) {
-			
-			direction = "right";
-			worldX += speed;
-		}
-		else if (keyH.leftPressed) {
-			
-			direction = "left";
-			worldX -= speed;
-		}
-		
-		spriteCounter++;
-		
-		if (spriteCounter > 10) {
-			if (spriteNum == 1) {
-				spriteNum = 2;
-			}
-			else if (spriteNum == 2) {
-				spriteNum = 1;
-			}
-			spriteCounter = 0;
-		}
+	    if (keyH.upPressed) {
+	        direction = "up";
+	        directionVector[1] = -1;
+	    }
+	    if (keyH.downPressed) {
+	        direction = "down";
+	        directionVector[1] = 1;
+	    }
+	    if (keyH.rightPressed) {
+	        direction = "right";
+	        directionVector[0] = 1;
+	    }
+	    if (keyH.leftPressed) {
+	        direction = "left";
+	        directionVector[0] = -1;
+	    }
+
+	    // Normalize direction vector
+	    double magnitude = Math.sqrt(directionVector[0] * directionVector[0] + directionVector[1] * directionVector[1]);
+	    if (magnitude != 0) {
+	        directionVector[0] /= magnitude;
+	        directionVector[1] /= magnitude;
+	        
+	        System.out.println(directionVector[0] * speed);
+	        System.out.println(directionVector[1] * speed);
+
+	        worldX += directionVector[0] * speed;
+	        worldY += directionVector[1] * speed;
+
+	        // Update sprite animation
+	        spriteCounter++;
+	        if (spriteCounter > 10) {
+	            spriteNum = (spriteNum == 1) ? 2 : 1;
+	            spriteCounter = 0;
+	        }
+	    }
 	}
+
 	
 	public void draw(Graphics2D g2) {
 		
