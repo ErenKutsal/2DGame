@@ -31,43 +31,34 @@ public class CollisionChecker {
 		int entityBottomRow = entitySolidWorldBottomY / tileSize;
 		int entityTopRow = entitySolidWorldTopY / tileSize;
 		
-		switch (entity.direction) {
-		case "up":
-			entityTopRow = (entitySolidWorldTopY - speed)/ tileSize;
-			Tile topLeftTile = tiles[entityTopRow][entityLeftCol];
-			Tile topRightTile = tiles[entityTopRow][entityRightCol];
-			
-			if (topLeftTile.collision || topRightTile.collision) {
-				entity.collisionOn = true;
-			}
-			break;
-		case "down":
-			entityBottomRow = (entitySolidWorldBottomY + speed)/ tileSize;
-			Tile bottomLeftTile = tiles[entityBottomRow][entityLeftCol];
-			Tile bottomRightTile = tiles[entityBottomRow][entityRightCol];
-			
-			if (bottomLeftTile.collision || bottomRightTile.collision) {
-				entity.collisionOn = true;
-			}
-			break;
-		case "right":
-			entityRightCol = (entitySolidWorldRightX + speed)/ tileSize;
-			Tile rightTopTile = tiles[entityTopRow][entityRightCol];
-			Tile rightBottomTile = tiles[entityBottomRow][entityRightCol];
-			
-			if (rightTopTile.collision || rightBottomTile.collision) {
-				entity.collisionOn = true;
-			}
-			break;
-		case "left":
-			entityLeftCol = (entitySolidWorldLeftX - speed)/ tileSize;
-			Tile leftTopTile = tiles[entityTopRow][entityLeftCol];
-			Tile leftBottomTile = tiles[entityBottomRow][entityLeftCol];
-			
-			if (leftTopTile.collision || leftBottomTile.collision) {
-				entity.collisionOn = true;
-			}
-			break;
+		float[] directionVector = entity.directionVector;
+		
+		// Check horizontal movement (left/right)
+		if (directionVector[0] != 0) {
+		    int newCol = (directionVector[0] > 0) 
+		        ? (entitySolidWorldRightX + speed) / tileSize  // Moving right
+		        : (entitySolidWorldLeftX - speed) / tileSize;  // Moving left
+		    
+		    Tile topTile = tiles[entityTopRow][newCol];
+		    Tile bottomTile = tiles[entityBottomRow][newCol];
+		    
+		    if ((topTile.collision || bottomTile.collision)) {
+		        directionVector[0] = 0;
+		    }
+		}
+
+		// Check vertical movement (up/down)
+		if (directionVector[1] != 0) {
+		    int newRow = (directionVector[1] > 0) 
+		        ? (entitySolidWorldBottomY + speed) / tileSize  // Moving down
+		        : (entitySolidWorldTopY - speed) / tileSize;   // Moving up
+		    
+		    Tile leftTile = tiles[newRow][entityLeftCol];
+		    Tile rightTile = tiles[newRow][entityRightCol];
+		    
+		    if ((leftTile.collision || rightTile.collision)) {
+		        directionVector[1] = 0;
+		    }
 		}
 	}
 	

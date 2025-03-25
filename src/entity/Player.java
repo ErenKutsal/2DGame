@@ -102,15 +102,12 @@ public class Player extends Entity{
 	    	directionVector[0] /= magnitude;
 	        directionVector[1] /= magnitude;
 	        
+	       
 	        
 	        worldX += Math.round((float)directionVector[0] * speed);
 	        worldY += Math.round((float)directionVector[1] * speed);
 	        
-	        //update the hitbox coordinates
-//	        solidArea.x = worldX + 8;
-//	        solidArea.y = worldY + 16;
-	        
-	       
+
 	        // Update sprite animation
 	        spriteCounter++;
 	        if (spriteCounter > 10) {
@@ -159,7 +156,7 @@ public class Player extends Entity{
 		}
 		int screenX = worldX - cam.cameraX;
 		int screenY = worldY - cam.cameraY;
-		System.out.println(cam.cameraX);
+		//System.out.println(cam.cameraX);
 		g2.drawImage(image, screenX, screenY, gameP.tileSize, gameP.tileSize, null);
 		
 	}
