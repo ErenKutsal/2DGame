@@ -41,6 +41,7 @@ public class Camera {
 	
 	public void followEntityInBox(Entity entity, Rectangle box) {
 		
+		
 		if (entity.worldX - cameraX < box.x && !(cameraX < 0)) {
 			cameraX = entity.worldX - box.x;
 		}
