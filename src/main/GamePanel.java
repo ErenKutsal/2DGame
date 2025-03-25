@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.util.Currency;
 
 import javax.swing.JPanel;
@@ -106,7 +107,9 @@ public class GamePanel extends JPanel implements Runnable{
 	public void update() {
 		
 		player.update();
-		cam.followEntity(player);
+		
+		Rectangle box = new Rectangle(184, 138, 400, 300);
+		cam.followEntityInBox(player, box);
 		
 	}
 	
@@ -118,7 +121,6 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		tileM.draw(g2);
 		player.draw(g2);
-		
 		
 		g2.dispose();
 	}
