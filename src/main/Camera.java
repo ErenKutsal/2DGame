@@ -16,11 +16,7 @@ public class Camera {
 		this.gameP = gameP;
 	}
 	
-	
-	public void followEntity(Entity entity) {
-		
-		cameraX = entity.worldX - (gameP.screenWidth / 2) + (gameP.tileSize / 2);
-		cameraY = entity.worldY - (gameP.screenHeight / 2) + (gameP.tileSize / 2);
+	public void dontGoOutOfMap() {
 		
 		if (cameraX < 0) {
 			cameraX = 0;
@@ -37,26 +33,37 @@ public class Camera {
 		else if (cameraY > gameP.tileSize * gameP.tileM.mapTiles.length - gameP.screenHeight) {
 			cameraY = gameP.tileSize * gameP.tileM.mapTiles.length - gameP.screenHeight;
 		}
+		
+	}
+	
+	
+	public void followEntity(Entity entity) {
+		
+		cameraX = entity.worldX - (gameP.screenWidth / 2) + (gameP.tileSize / 2);
+		cameraY = entity.worldY - (gameP.screenHeight / 2) + (gameP.tileSize / 2);
+		
+		dontGoOutOfMap();
 	}
 	
 	public void followEntityInBox(Entity entity, Rectangle box) {
 		
-		
-		if (entity.worldX - cameraX < box.x && !(cameraX < 0)) {
+		if (entity.worldX - cameraX < box.x) {
 			cameraX = entity.worldX - box.x;
 		}
 		
-		else if (entity.worldX - cameraX + 48 > box.x + box.width && !(cameraX > gameP.tileSize * gameP.tileM.mapTiles[0].length - gameP.screenWidth)) {
+		else if (entity.worldX - cameraX + 48 > box.x + box.width) {
 			cameraX = entity.worldX - box.x - box.width + 48;
 		}
 		
-		if (entity.worldY - cameraY < box.y && !(cameraY < 0)) {
+		if (entity.worldY - cameraY < box.y) {
 			cameraY = entity.worldY - box.y;
 		}
 		
-		else if (entity.worldY - cameraY + 48 > box.y + box.height && !(cameraY > gameP.tileSize * gameP.tileM.mapTiles.length - gameP.screenHeight)) {
+		else if (entity.worldY - cameraY + 48 > box.y + box.height) {
 			cameraY = entity.worldY - box.y - box.height + 48;
 		}
+		
+		dontGoOutOfMap();
 		
 	}
 
