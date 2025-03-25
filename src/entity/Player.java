@@ -89,12 +89,8 @@ public class Player extends Entity{
 	    }
 	    
 	    CollisionChecker collisionChecker = gameP.collisionChecker;
-	    collisionOn = false;
 	    collisionChecker.checkTile(this);
 	    
-	    if (collisionOn) {
-	    	return;
-	    }
 	    // Normalize direction vector
 	    double magnitude = Math.sqrt(directionVector[0] * directionVector[0] + directionVector[1] * directionVector[1]);
 	    if (magnitude != 0) {
@@ -156,7 +152,6 @@ public class Player extends Entity{
 		}
 		int screenX = worldX - cam.cameraX;
 		int screenY = worldY - cam.cameraY;
-		//System.out.println(cam.cameraX);
 		g2.drawImage(image, screenX, screenY, gameP.tileSize, gameP.tileSize, null);
 		
 	}
