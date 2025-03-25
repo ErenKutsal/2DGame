@@ -31,16 +31,16 @@ public class Player extends Entity{
 		getPlayerImage();
 		
 		solidArea = new Rectangle();
-		solidArea.x = 8;
-		solidArea.y = 16;
-		solidArea.width = 32;
-		solidArea.height = 32;
+		solidArea.x = 20;
+		solidArea.y = 36;
+		solidArea.width = 8;
+		solidArea.height = 12;
 		
 	}
 	
 	public void setDefaultValues() {
-		worldX = 100;
-		worldY = 100;
+		worldX = 200;
+		worldY = 200;
 		speed = 4;
 		
 		direction = "down";
@@ -92,11 +92,16 @@ public class Player extends Entity{
 	    collisionOn = false;
 	    collisionChecker.checkTile(this);
 	    
+	    /*
 	    if (collisionOn) {
 	    	return;
 	    }
+	    */
+	    
 	    // Normalize direction vector
+	    
 	    double magnitude = Math.sqrt(directionVector[0] * directionVector[0] + directionVector[1] * directionVector[1]);
+	    
 	    if (magnitude != 0) {
 	        
 	    	directionVector[0] /= magnitude;
@@ -154,9 +159,10 @@ public class Player extends Entity{
 			}
 			break;
 		}
+		
 		int screenX = worldX - cam.cameraX;
 		int screenY = worldY - cam.cameraY;
-		//System.out.println(cam.cameraX);
+
 		g2.drawImage(image, screenX, screenY, gameP.tileSize, gameP.tileSize, null);
 		
 	}
