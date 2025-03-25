@@ -43,10 +43,11 @@ public class CollisionChecker {
 		    Tile bottomTile = tiles[entityBottomRow][newCol];
 		    
 		    if ((topTile.collision || bottomTile.collision)) {
+		    	System.out.println("carpıs");
 		        directionVector[0] = 0;
 		    }
 		}
-
+		
 		// Check vertical movement (up/down)
 		if (directionVector[1] != 0) {
 		    int newRow = (directionVector[1] > 0) 
@@ -57,6 +58,7 @@ public class CollisionChecker {
 		    Tile rightTile = tiles[newRow][entityRightCol];
 		    
 		    if ((leftTile.collision || rightTile.collision)) {
+		    	System.out.println("asdd");
 		        directionVector[1] = 0;
 		    }
 		}

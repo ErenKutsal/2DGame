@@ -5,7 +5,8 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
 
-	public boolean upPressed, downPressed, rightPressed, leftPressed;
+	public boolean upPressed, downPressed, rightPressed, leftPressed, onePressed, spacePressed;
+	public boolean spaceJustPressed = false;
 	
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -18,6 +19,7 @@ public class KeyHandler implements KeyListener {
 
 		int code = e.getKeyCode();
 		
+		
 		if (code == KeyEvent.VK_W) { //if player pressed W
 			upPressed = true;
 		}
@@ -29,6 +31,16 @@ public class KeyHandler implements KeyListener {
 		}
 		if (code == KeyEvent.VK_A) { //if player pressed A
 			leftPressed = true;
+		}
+		if (code == KeyEvent.VK_1) { //if player pressed 1
+			onePressed = !onePressed;
+		}
+		if (code == KeyEvent.VK_SPACE && !spaceJustPressed) { //if player pressed SPACE
+			System.out.println("boşluk aktif");
+			spacePressed = true;
+			spaceJustPressed = true;
+		} else {
+			spacePressed = false;
 		}
 	}
 
@@ -48,6 +60,9 @@ public class KeyHandler implements KeyListener {
 		}
 		if (code == KeyEvent.VK_A) { //if player pressed A
 			leftPressed = false;
+		}
+		if (code == KeyEvent.VK_SPACE) { //if player pressed SPACE
+			spaceJustPressed = false;
 		}
 	}
 

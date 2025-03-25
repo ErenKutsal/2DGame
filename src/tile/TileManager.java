@@ -9,7 +9,6 @@ import java.io.InputStreamReader;
 
 import javax.imageio.ImageIO;
 
-import entity.Player;
 import main.Camera;
 import main.GamePanel;
 
@@ -46,6 +45,7 @@ public class TileManager {
 		this.cam = cam;
 		loadMap(filePath);
 		System.out.println("bok");
+		System.out.println("2D Oyuna Hoş Geldin! Blok yerleştirmeyi açma/kapama için 1'e, blok yerleştirmek için Boşluğa bas!");
 	}
 	
 	public void loadMap(String filePath) {
@@ -95,7 +95,6 @@ public class TileManager {
 	public void draw(Graphics2D g2) {
 		
 		int tileSize = gameP.tileSize;
-		Player player = gameP.player;
 		
 		for (int row = 0; row < gameP.maxWorldRow; row++) {
 			

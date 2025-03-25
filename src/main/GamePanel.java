@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.util.Currency;
 
 import javax.swing.JPanel;
 
@@ -14,6 +13,7 @@ import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{
 	
+	private static final long serialVersionUID = 1L; //hicbir fikrim yok ama erroru gideriyor.
 	
 	final int originalTileSize = 16;
 	final int scale = 3;
@@ -34,7 +34,7 @@ public class GamePanel extends JPanel implements Runnable{
 	TileManager tileM = new TileManager(this, cam);
 	public CollisionChecker collisionChecker = new CollisionChecker(this);
 	
-	public Player player = new Player(this, keyH, cam);
+	public Player player = new Player(this, keyH, cam, tileM);
 	//players default position
 	int playerX = 100;
 	int playerY = 100;
