@@ -15,6 +15,7 @@ public class Entity {
 	public String direction;
 	
 	public Rectangle solidArea; //the part of the entity that is capable of colliding
+	public int solidAreaDefaultX, solidAreaDefaultY;
 	public boolean collisionOn; //useless for now
 	
 	public int spriteCounter = 0;

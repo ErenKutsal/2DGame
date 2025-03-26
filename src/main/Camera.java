@@ -92,8 +92,11 @@ public class Camera {
 	    if (keyH.leftArrowPressed) {
 	        cameraX -= speed;
 	    }
+	    System.out.println(cameraX);
+	    System.out.println(cameraY);
 	    
 	    dontGoOutOfMap();
 	}
+	
 
 }

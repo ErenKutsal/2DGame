@@ -23,6 +23,7 @@ public class Player extends Entity{
 	public Camera cam;
 	public TileManager tileM;
 	
+	public int keyNo = 0; //Number of keys collected
 	public int playerX, playerY; //Coordinates to draw the player.
 	
 	
@@ -39,6 +40,8 @@ public class Player extends Entity{
 		solidArea = new Rectangle();
 		solidArea.x = 20;
 		solidArea.y = 36;
+		solidAreaDefaultX = 20;
+		solidAreaDefaultY = 36;
 		solidArea.width = 8;
 		solidArea.height = 12;
 		
@@ -100,8 +103,16 @@ public class Player extends Entity{
 	    }
 	    
 	    CollisionChecker collisionChecker = gameP.collisionChecker;
+	    
+	    //check tile collision
 	    collisionChecker.checkTile(this);
 	    
+	    //check object collision, return object index if collides
+	    int objectIndex = collisionChecker.checkObject(this);
+	    
+	    if (objectIndex != -1) {
+	    	pickUpObject(objectIndex);
+	    }
 
 	    // Normalize direction vector
 	    
@@ -233,6 +244,27 @@ public class Player extends Entity{
 		
 		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f)); // Opaklığa geri dön
 
+	}
+	
+	public void pickUpObject(int objectIndex) {
+		
+		String name = gameP.objects.get(objectIndex).name;
+		
+		switch (name) {
+		case "key":
+			keyNo++;
+			gameP.objects.set(objectIndex, null);
+			break;
+		case "chest":
+			break;
+		case "door":
+			if (keyNo > 0) {
+				gameP.objects.set(objectIndex, null);
+			}
+			break;
+			
+		}
+		
 	}
 	
 }

@@ -5,10 +5,12 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
 import entity.Player;
+import objects.SuperObject;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -33,12 +35,14 @@ public class GamePanel extends JPanel implements Runnable{
 	KeyHandler keyH = new KeyHandler();
 	TileManager tileM = new TileManager(this, cam);
 	public CollisionChecker collisionChecker = new CollisionChecker(this);
+	public AssetSetter aSetter = new AssetSetter(this);
+	public ArrayList<SuperObject> objects = new ArrayList<>(); //Inventory of length 10.
 	
 	public Player player = new Player(this, keyH, cam, tileM);
 	//players default position
-	int playerX = 100;
-	int playerY = 100;
-	int playerSpeed = 4;
+//	int playerX = 100;
+//	int playerY = 100;
+//	int playerSpeed = 4;
 	
 	//World Settings
 	public final int maxWorldRow = 50;
@@ -55,6 +59,10 @@ public class GamePanel extends JPanel implements Runnable{
 		setFocusable(true);
 	}
 
+	public void setupGame() {
+		
+		aSetter.setObject();
+	}
 	public void startGame() {
 		
 		gameThread = new Thread(this);
@@ -109,8 +117,8 @@ public class GamePanel extends JPanel implements Runnable{
 		player.update();
 		
 		Rectangle box = new Rectangle(184, 138, 400, 300);
-		//cam.followEntityInBox(player, box);
-		cam.followArrowKeys(keyH, 8);
+		cam.followEntityInBox(player, box);
+		//cam.followArrowKeys(keyH, 8);
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -120,6 +128,14 @@ public class GamePanel extends JPanel implements Runnable{
 		Graphics2D g2 = (Graphics2D)g;
 		
 		tileM.draw(g2);
+		
+		for (SuperObject object : objects) {
+			if (object != null) {
+				
+				object.draw(g2, this);
+			}
+		}
+		
 		player.draw(g2);
 		
 		g2.dispose();
