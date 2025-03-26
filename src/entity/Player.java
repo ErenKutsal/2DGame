@@ -25,6 +25,7 @@ public class Player extends Entity{
 	
 	public int playerX, playerY; //Coordinates to draw the player.
 	
+	
 	public Player(GamePanel gameP, KeyHandler keyH, Camera cam, TileManager tileM) {
 		
 		this.gameP = gameP;
@@ -75,22 +76,27 @@ public class Player extends Entity{
 	public void update() {
 	    directionVector[0] = 0;
 	    directionVector[1] = 0;
+	    isMoving = false;
 
 	    if (keyH.upPressed) {
 	        direction = "up";
 	        directionVector[1] = -1;
+	        isMoving = true;
 	    }
 	    if (keyH.downPressed) {
 	        direction = "down";
 	        directionVector[1] = 1;
+	        isMoving = true;
 	    }
 	    if (keyH.rightPressed) {
 	        direction = "right";
 	        directionVector[0] = 1;
+	        isMoving = true;
 	    }
 	    if (keyH.leftPressed) {
 	        direction = "left";
 	        directionVector[0] = -1;
+	        isMoving = true;
 	    }
 	    
 	    CollisionChecker collisionChecker = gameP.collisionChecker;

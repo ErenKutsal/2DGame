@@ -63,6 +63,17 @@ public class Camera {
 			cameraY = entity.worldY - box.y - box.height + 48;
 		}
 		
+		if (cameraX + 24 < entity.worldX - (gameP.screenWidth / 2) + (gameP.tileSize / 2)) {
+			cameraX += entity.speed/2;
+		} else if (cameraX > entity.worldX - (gameP.screenWidth / 2) + (gameP.tileSize / 2) + 24) {
+			cameraX -= entity.speed/2;
+		}
+		if (cameraY + 24 < entity.worldY - (gameP.screenHeight / 2) + (gameP.tileSize / 2)) {
+			cameraY += entity.speed/2;
+		} else if (cameraY > entity.worldY - (gameP.screenHeight / 2) + (gameP.tileSize / 2) + 24) {
+			cameraY -= entity.speed/2;
+		}
+		
 		dontGoOutOfMap();
 		
 	}

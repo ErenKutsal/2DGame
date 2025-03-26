@@ -9,6 +9,8 @@ public class Entity {
 	public int speed;
 	public float[] directionVector = new float[] {0, 0}; //changed to float array to prevent some errors
 	
+	public boolean isMoving;
+	
 	public BufferedImage up1, up2, down1, down2, right1, right2, left1, left2;
 	public String direction;
 	
