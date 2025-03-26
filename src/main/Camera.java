@@ -77,5 +77,23 @@ public class Camera {
 		dontGoOutOfMap();
 		
 	}
+	
+	public void followArrowKeys(KeyHandler keyH, int speed) {
+		
+		if (keyH.upArrowPressed) {
+	       cameraY -= speed;
+	    }
+	    if (keyH.downArrowPressed) {
+	    	cameraY += speed;
+	    }
+	    if (keyH.rightArrowPressed) {
+	        cameraX += speed;
+	    }
+	    if (keyH.leftArrowPressed) {
+	        cameraX -= speed;
+	    }
+	    
+	    dontGoOutOfMap();
+	}
 
 }

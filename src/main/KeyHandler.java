@@ -5,7 +5,8 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
 
-	public boolean upPressed, downPressed, rightPressed, leftPressed, onePressed, spacePressed;
+	public boolean upPressed, downPressed, rightPressed, leftPressed, onePressed, spacePressed,
+	upArrowPressed, downArrowPressed, rightArrowPressed, leftArrowPressed;
 	public boolean spaceJustPressed = false;
 	
 	@Override
@@ -32,6 +33,20 @@ public class KeyHandler implements KeyListener {
 		if (code == KeyEvent.VK_A) { //if player pressed A
 			leftPressed = true;
 		}
+		
+		if (code == KeyEvent.VK_UP) { 
+			upArrowPressed = true;
+		}
+		if (code == KeyEvent.VK_DOWN) { 
+			downArrowPressed = true;
+		}
+		if (code == KeyEvent.VK_RIGHT) {
+			rightArrowPressed = true;
+		}
+		if (code == KeyEvent.VK_LEFT) {
+			leftArrowPressed = true;
+		}
+		
 		if (code == KeyEvent.VK_1) { //if player pressed 1
 			onePressed = !onePressed;
 		}
@@ -63,6 +78,19 @@ public class KeyHandler implements KeyListener {
 		}
 		if (code == KeyEvent.VK_SPACE) { //if player pressed SPACE
 			spaceJustPressed = false;
+		}
+		
+		if (code == KeyEvent.VK_UP) { 
+			upArrowPressed = false;
+		}
+		if (code == KeyEvent.VK_DOWN) { 
+			downArrowPressed = false;
+		}
+		if (code == KeyEvent.VK_RIGHT) {
+			rightArrowPressed = false;
+		}
+		if (code == KeyEvent.VK_LEFT) {
+			leftArrowPressed = false;
 		}
 	}
 

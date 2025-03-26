@@ -109,8 +109,8 @@ public class GamePanel extends JPanel implements Runnable{
 		player.update();
 		
 		Rectangle box = new Rectangle(184, 138, 400, 300);
-		cam.followEntityInBox(player, box);
-		
+		//cam.followEntityInBox(player, box);
+		cam.followArrowKeys(keyH, 8);
 	}
 	
 	public void paintComponent(Graphics g) {
