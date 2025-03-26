@@ -9,7 +9,7 @@ import main.Camera;
 public class OBJ_Chest extends SuperObject{
 
 	public OBJ_Chest(Camera cam) {
-		
+		//TODO add rectangle coordinates and size
 		super(cam);
 		name = "chest";
 		imageFile = "/objects/chest.png";

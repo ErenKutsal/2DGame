@@ -38,11 +38,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public AssetSetter aSetter = new AssetSetter(this);
 	public ArrayList<SuperObject> objects = new ArrayList<>(); //Inventory of length 10.
 	
-	public Player player = new Player(this, keyH, cam, tileM);
-	//players default position
-//	int playerX = 100;
-//	int playerY = 100;
-//	int playerSpeed = 4;
+	public Player player = new Player(this, cam, tileM);
 	
 	//World Settings
 	public final int maxWorldRow = 50;
@@ -116,7 +112,7 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		player.update();
 		
-		Rectangle box = new Rectangle(184, 138, 400, 300);
+		Rectangle box = new Rectangle(184, 138, 400, 300); //default: 184, 138, 400, 300
 		cam.followEntityInBox(player, box);
 		//cam.followArrowKeys(keyH, 8);
 	}

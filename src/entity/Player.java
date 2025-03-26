@@ -12,6 +12,7 @@ import main.Camera;
 import main.CollisionChecker;
 import main.GamePanel;
 import main.KeyHandler;
+import objects.OBJ_Door;
 import tile.Tile;
 import tile.TileManager;
 import tile.TileManager.TILES;
@@ -19,18 +20,17 @@ import tile.TileManager.TILES;
 public class Player extends Entity{
 
 	public GamePanel gameP;
-	public KeyHandler keyH;
 	public Camera cam;
 	public TileManager tileM;
+	public BufferedImage up1, up2, down1, down2, right1, right2, left1, left2;
 	
 	public int keyNo = 0; //Number of keys collected
 	public int playerX, playerY; //Coordinates to draw the player.
 	
 	
-	public Player(GamePanel gameP, KeyHandler keyH, Camera cam, TileManager tileM) {
+	public Player(GamePanel gameP, Camera cam, TileManager tileM) {
 		
 		this.gameP = gameP;
-		this.keyH = keyH;
 		this.cam = cam;
 		this.tileM = tileM;
 		
@@ -48,8 +48,8 @@ public class Player extends Entity{
 	}
 	
 	public void setDefaultValues() {
-		worldX = 200;
-		worldY = 200;
+		worldX = 25 * gameP.tileSize;
+		worldY = 25 * gameP.tileSize;
 		speed = 4;
 		
 		direction = "down";
@@ -81,22 +81,22 @@ public class Player extends Entity{
 	    directionVector[1] = 0;
 	    isMoving = false;
 
-	    if (keyH.upPressed) {
+	    if (KeyHandler.upPressed) {
 	        direction = "up";
 	        directionVector[1] = -1;
 	        isMoving = true;
 	    }
-	    if (keyH.downPressed) {
+	    if (KeyHandler.downPressed) {
 	        direction = "down";
 	        directionVector[1] = 1;
 	        isMoving = true;
 	    }
-	    if (keyH.rightPressed) {
+	    if (KeyHandler.rightPressed) {
 	        direction = "right";
 	        directionVector[0] = 1;
 	        isMoving = true;
 	    }
-	    if (keyH.leftPressed) {
+	    if (KeyHandler.leftPressed) {
 	        direction = "left";
 	        directionVector[0] = -1;
 	        isMoving = true;
@@ -111,7 +111,7 @@ public class Player extends Entity{
 	    int objectIndex = collisionChecker.checkObject(this);
 	    
 	    if (objectIndex != -1) {
-	    	pickUpObject(objectIndex);
+	    	InteractWithObject(objectIndex);
 	    }
 
 	    // Normalize direction vector
@@ -179,7 +179,7 @@ public class Player extends Entity{
 		int screenX = worldX - cam.cameraX;
 		int screenY = worldY - cam.cameraY;
 		
-		if (keyH.onePressed) {
+		if (KeyHandler.onePressed) {
 			displayBox(g2);
 		}
 		g2.drawImage(image, screenX, screenY, gameP.tileSize, gameP.tileSize, null);
@@ -233,7 +233,7 @@ public class Player extends Entity{
 		
 		int tileScreenX = oldTile.worldX - cam.cameraX;
 		int tileScreenY = oldTile.worldY - cam.cameraY;
-		if (keyH.spacePressed) {
+		if (KeyHandler.spacePressed) {
 			Tile newTile = new Tile(TILES.WALL.image, newWorldCol*gameP.tileSize, newWorldRow*gameP.tileSize);
 			newTile.collision = true;
 			tileM.mapTiles[newWorldRow][newWorldCol] = newTile;
@@ -246,7 +246,7 @@ public class Player extends Entity{
 
 	}
 	
-	public void pickUpObject(int objectIndex) {
+	public void InteractWithObject(int objectIndex) {
 		
 		String name = gameP.objects.get(objectIndex).name;
 		
@@ -259,7 +259,9 @@ public class Player extends Entity{
 			break;
 		case "door":
 			if (keyNo > 0) {
-				gameP.objects.set(objectIndex, null);
+				OBJ_Door door =(OBJ_Door) gameP.objects.get(objectIndex);
+				door.open();
+				keyNo--;
 			}
 			break;
 			

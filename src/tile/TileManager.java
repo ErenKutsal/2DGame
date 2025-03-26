@@ -21,7 +21,7 @@ public class TileManager {
 	
 	public enum TILES {
 		
-		WATER("/tile/water.png"), WALL("/tile/wall.png"), GRASS("/tile/grass.png");
+		WATER("/tile/water.png"), WALL("/tile/wall.png"), GRASS("/tile/grass.png"), TREE("/tile/tree.png");
 		
 		public BufferedImage image;
 		
@@ -41,7 +41,7 @@ public class TileManager {
 		
 		this.gameP = gameP;
 		mapTiles = new Tile[gameP.maxWorldRow][gameP.maxWorldCol];
-		String filePath = "/maps/worldMap";
+		String filePath = "/maps/island.txt";
 		this.cam = cam;
 		loadMap(filePath);
 		System.out.println("bok");
@@ -79,7 +79,11 @@ public class TileManager {
 						wallTile.collision = true;
 						mapTiles[row][col] = wallTile;
 						break;
-					
+					case "3":
+						Tile treeTile = new Tile(TILES.TREE.image, col*gameP.tileSize, row*gameP.tileSize);
+						treeTile.collision = true;
+						mapTiles[row][col] = treeTile;
+						break;
 					}
 					++col;
 				}

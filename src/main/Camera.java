@@ -7,7 +7,6 @@ import entity.Entity;
 public class Camera {
 	
 	public GamePanel gameP;
-	public KeyHandler keyH;
 	public Entity entity;
 	
 	public int cameraX, cameraY;
@@ -80,16 +79,16 @@ public class Camera {
 	
 	public void followArrowKeys(KeyHandler keyH, int speed) {
 		
-		if (keyH.upArrowPressed) {
+		if (KeyHandler.upArrowPressed) {
 	       cameraY -= speed;
 	    }
-	    if (keyH.downArrowPressed) {
+	    if (KeyHandler.downArrowPressed) {
 	    	cameraY += speed;
 	    }
-	    if (keyH.rightArrowPressed) {
+	    if (KeyHandler.rightArrowPressed) {
 	        cameraX += speed;
 	    }
-	    if (keyH.leftArrowPressed) {
+	    if (KeyHandler.leftArrowPressed) {
 	        cameraX -= speed;
 	    }
 	    System.out.println(cameraX);
